@@ -20,6 +20,9 @@ def setup_argparse():
     list_parser.add_argument(
         "--output", "-o", help="Output file for the problem list (JSON format)"
     )
+    list_parser.add_argument(
+        "--repo", help="Print out all problem IDs for the specified repository"
+    )
 
     details_parser = subparsers.add_parser(
         "details", help="Show details of a specific problem"
@@ -88,7 +91,10 @@ def print_json(data, output_file=None):
 
 
 def list_problems(evaluator: SWEBenchEvaluator, args):
-    summary = evaluator.get_benchmark_summary()
+    if args.repo:
+        summary = evaluator.get_benchmark_summary(repo=args.repo)
+    else:
+        summary = evaluator.get_benchmark_summary()
     print_json(summary, args.output)
 
 

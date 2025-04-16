@@ -273,31 +273,28 @@ class SWEBenchEvaluator:
 
         return details
 
-    def get_benchmark_summary(self, instance_id=None):
+    def get_benchmark_summary(self, repo=None):
         if self.dataset is None:
             self.load_dataset()
 
-        if instance_id:
-            problem = self.get_problem_by_id(instance_id)
-            return {
-                "instance_id": problem["instance_id"],
-                "repo": problem["repo"],
-                "problem_statement": problem["problem_statement"],
-                "fail_to_pass_tests": json.loads(problem["FAIL_TO_PASS"]),
-                "pass_to_pass_tests": json.loads(problem["PASS_TO_PASS"]),
-                "base_commit": problem["base_commit"],
-            }
-        else:
-            sample_problems = []
-            for i in range(min(5, len(self.dataset["test"]))):
-                sample_problems.append(self.dataset["test"][i]["instance_id"])
+        if repo:
+            problem_ids = [
+                record["instance_id"]
+                for record in self.dataset["test"]
+                if record["repo"] == repo
+            ]
+            return {"repo": repo, "problem_ids": problem_ids}
 
-            repositories = set()
-            for i in range(len(self.dataset["test"])):
-                repositories.add(self.dataset["test"][i]["repo"])
+        sample_problems = []
+        for i in range(min(5, len(self.dataset["test"]))):
+            sample_problems.append(self.dataset["test"][i]["instance_id"])
 
-            return {
-                "total_problems": len(self.dataset["test"]),
-                "repositories": list(repositories),
-                "sample_problems": sample_problems,
-            }
+        repositories = set()
+        for i in range(len(self.dataset["test"])):
+            repositories.add(self.dataset["test"][i]["repo"])
+
+        return {
+            "total_problems": len(self.dataset["test"]),
+            "repositories": list(repositories),
+            "sample_problems": sample_problems,
+        }
