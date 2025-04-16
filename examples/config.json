@@ -1,0 +1,17 @@
+[
+    {
+        "instance_id": "astropy__astropy-12907",
+        "solution_commit": "your-commit-hash-1",
+        "tool": "GitHub Copilot"
+    },
+    {
+        "instance_id": "astropy__astropy-13033",
+        "solution_commit": "your-commit-hash-2",
+        "tool": "Cursor"
+    },
+    {
+        "instance_id": "astropy__astropy-13236",
+        "solution_commit": "your-commit-hash-3",
+        "tool": "Windsurf"
+    }
+]
