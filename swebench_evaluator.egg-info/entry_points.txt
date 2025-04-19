@@ -1,0 +1,3 @@
+[console_scripts]
+swebench-eval = swebench_evaluator.cli:main
+
